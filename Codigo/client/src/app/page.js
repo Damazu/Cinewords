@@ -1,7 +1,8 @@
 'use client';
 
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
@@ -16,7 +17,8 @@ export default function Home() {
   };
 
   function getMovies() {
-    axios.request(options)
+    axios
+      .request(options)
       .then((response) => {
         const data = response.data.results; // Obtém o array de filmes
         console.log(data);
@@ -33,33 +35,36 @@ export default function Home() {
   }, []);
 
   return (
-    <>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-        {movies && movies.length > 0 ? (
-          movies.map((movie) => (
-            <div
-              key={movie.id}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                padding: "10px",
-                width: "200px",
-              }}
-            >
-              <img
-                src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '/default-image.jpg'} // Use uma imagem padrão
-                alt={movie.title}
-                style={{ width: "100%", borderRadius: "8px" }}
-              />
-
-              <h3 style={{ fontSize: "16px", margin: "10px 0" }}>{movie.title}</h3>
-              <p style={{ fontSize: "14px" }}>{movie.release_date}</p>
-            </div>
-          ))
-        ) : (
-          <p>Nenhum filme encontrado</p>
-        )}
-      </div>
-    </>
+    <div className="gridContainer">
+      {movies && movies.length > 0 ? (
+        movies.map((movie) => (
+          <Card key={movie.id} className="card">
+            <CardMedia
+              component="img"
+              height="300"
+              className="cardMedia"
+              image={
+                movie.poster_path
+                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                  : "https://via.placeholder.com/200x300?text=No+Image"
+              }
+              alt={movie.title}
+            />
+            <CardContent className="cardContent">
+              <Typography className="cardTitle" component="div">
+                {movie.title}
+              </Typography>
+              <Typography className="cardSubtitle" component="p">
+                Lançamento: {movie.release_date}
+              </Typography>
+            </CardContent>
+          </Card>
+        ))
+      ) : (
+        <Typography variant="h6" component="p">
+          Nenhum filme encontrado
+        </Typography>
+      )}
+    </div>
   );
 }
