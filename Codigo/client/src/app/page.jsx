@@ -20,13 +20,13 @@ export default function Home() {
     axios
       .request(options)
       .then((response) => {
-        const data = response.data.results; // Obtém o array de filmes
+        const data = response.data.results;
         console.log(data);
-        setMovies(data); // Define o estado com o array de filmes
+        setMovies(data); 
       })
       .catch((error) => {
         console.error("Erro ao buscar filmes:", error);
-        setMovies([]); // Define como array vazio em caso de erro
+        setMovies([]); 
       });
   }
 
@@ -51,7 +51,7 @@ export default function Home() {
               alt={movie.title}
             />
             <CardContent className="cardContent">
-              <Typography className="cardTitle" component="div">
+              <Typography className="cardTitle" component="div" color="white">
                 {movie.title}
               </Typography>
               <Typography className="cardSubtitle" component="p">
