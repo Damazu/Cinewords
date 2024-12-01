@@ -6,9 +6,9 @@ import { Card, CardMedia, CardContent, Typography, CircularProgress } from '@mui
 
 export default function Home() {
   const [movies, setMovies] = useState([]);
-  const [page, setPage] = useState(1); // Controle de página
-  const [loading, setLoading] = useState(false); // Controle de loading
-  const [hasMore, setHasMore] = useState(true); // Controle de quando parar de carregar filmes
+  const [page, setPage] = useState(1); 
+  const [loading, setLoading] = useState(false); 
+  const [hasMore, setHasMore] = useState(true); 
 
   const options = {
     method: 'GET',
@@ -19,9 +19,8 @@ export default function Home() {
     }
   };
 
-  // Função para obter filmes da API
   function getMovies() {
-    if (loading || !hasMore) return; // Impede chamadas enquanto o loading está ativo ou não há mais filmes
+    if (loading || !hasMore) return; 
 
     setLoading(true);
     axios
@@ -34,7 +33,7 @@ export default function Home() {
         if (data.length > 0) {
           setMovies((prevMovies) => [...prevMovies, ...data]);
         } else {
-          setHasMore(false); // Não há mais filmes para carregar
+          setHasMore(false); 
         }
       })
       .catch((error) => {
@@ -45,30 +44,25 @@ export default function Home() {
       });
   }
 
-  // UseEffect para carregar os filmes ao inicializar
   useEffect(() => {
     getMovies();
-  }, [page]); // Carrega filmes sempre que a página mudar
+  }, [page]); 
 
-  // Função para detectar o scroll
   const handleScroll = () => {
-    // Verifica se o usuário chegou ao final da página
     if (
       window.innerHeight + document.documentElement.scrollTop >=
       document.documentElement.offsetHeight - 100
     ) {
-      // Se a página estiver no final e não estiver carregando
       if (hasMore && !loading) {
-        setPage((prevPage) => prevPage + 1); // Incrementa a página
+        setPage((prevPage) => prevPage + 1); 
       }
     }
   };
 
-  // Adiciona o evento de scroll
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll); // Limpa o evento ao desmontar o componente
-  }, [loading, hasMore]); // Reexecuta quando o estado de loading ou hasMore mudar
+    return () => window.removeEventListener('scroll', handleScroll); 
+  }, [loading, hasMore]); 
 
   return (
     <div className="gridContainer">
