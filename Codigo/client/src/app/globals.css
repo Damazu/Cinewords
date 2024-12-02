@@ -25,6 +25,7 @@ body {
   gap: 20px;
   padding: 16px;
   margin: 10px 64px;
+  justify-content: space-between;
 }
 
 .card {
