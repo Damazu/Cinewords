@@ -31,19 +31,19 @@ O objetivo do Cinewords é permitir que os usuários descubram filmes, registrem
 ## Diagramas
 
 ### 1. Diagrama de Classes
-
+![Diagrama de Classes](Docs/Diagrama_Classes.png)
 
 ### 2. Diagrama de Componentes
-
+![Diagrama de Componentes](Docs/Diagrama_Componentes.png)
 
 ### 3. Diagrama de Sequência
-
+![Diagrama de Sequência](Docs/Diagrama_Sequencia.png)
 
 ### 4. Diagrama de Implantação
-
+![Diagrama de Implantação](Docs/Diagrama_Implantacao.png)
 
 ### 5. Diagrama de Estados
-
+![Diagrama de Estados](Docs/Diagrama_Estado.png)
 
 ### 6. Diagrama de Comunicação
-
+![Diagrama de Comunicação](Docs/Diagrama_Comunicacao.png)
