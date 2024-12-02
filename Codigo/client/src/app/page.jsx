@@ -65,30 +65,35 @@ export default function Home() {
   }, [loading, hasMore]); 
 
   return (
-    <div className="gridContainer">
+    <div className="gridContainer"> 
       {movies && movies.length > 0 ? (
         movies.map((movie) => (
-          <Card key={movie.id} className="card">
-            <CardMedia
-              component="img"
-              height="300"
-              className="cardMedia"
-              image={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : 'https://via.placeholder.com/200x300?text=No+Image'
-              }
-              alt={movie.title}
-            />
-            <CardContent className="cardContent">
-              <Typography className="cardTitle" component="div" color="white">
-                {movie.title}
-              </Typography>
-              <Typography className="cardSubtitle" component="p">
-                Lançamento: {movie.release_date}
-              </Typography>
-            </CardContent>
-          </Card>
+            <Card
+              key={movie.id}
+              className="card"
+              onClick={() => handleCardClick(movie.id)} // Chama a navegação ao clicar
+              style={{ cursor: "pointer" }} // Muda o cursor para indicar clicável
+            >
+              <CardMedia
+                component="img"
+                height="300"
+                className="cardMedia"
+                image={
+                  movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                    : "https://via.placeholder.com/200x300?text=No+Image"
+                }
+                alt={movie.title}
+              />
+              <CardContent className="cardContent">
+                <Typography className="cardTitle" component="div" color="white">
+                  {movie.title}
+                </Typography>
+                <Typography className="cardSubtitle" component="p">
+                  Lançamento: {movie.release_date}
+                </Typography>
+              </CardContent>
+            </Card>
         ))
       ) : (
         <Typography variant="h6" component="p">
