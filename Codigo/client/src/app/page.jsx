@@ -2,10 +2,12 @@
 
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Card, CardMedia, CardContent, Typography } from "@mui/material";
+import { useRouter } from "next/navigation"; // Importação do useRouter
+import { Card, CardMedia, CardContent, Typography, Grid } from "@mui/material";
 
 export default function Home() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState([]); // Vários filmes
+  const router = useRouter(); // Hook para navegação
 
   const options = {
     method: 'GET',
@@ -16,49 +18,52 @@ export default function Home() {
     }
   };
 
-  function getMovies() {
+  useEffect(() => {
     axios
       .request(options)
       .then((response) => {
-        const data = response.data.results;
-        console.log(data);
-        setMovies(data); 
+        setMovies(response.data.results || []); // Atualiza os filmes
       })
       .catch((error) => {
         console.error("Erro ao buscar filmes:", error);
-        setMovies([]); 
+        setMovies([]); // Garante que o estado não fique indefinido
       });
-  }
-
-  useEffect(() => {
-    getMovies();
   }, []);
 
+  const handleCardClick = (id) => {
+    router.push(`/infos/${id}`); // Navega para a página de detalhes do filme
+  };
+
   return (
-    <div className="gridContainer">
+    <div className="gridContainer"> 
       {movies && movies.length > 0 ? (
         movies.map((movie) => (
-          <Card key={movie.id} className="card">
-            <CardMedia
-              component="img"
-              height="300"
-              className="cardMedia"
-              image={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : "https://via.placeholder.com/200x300?text=No+Image"
-              }
-              alt={movie.title}
-            />
-            <CardContent className="cardContent">
-              <Typography className="cardTitle" component="div" color="white">
-                {movie.title}
-              </Typography>
-              <Typography className="cardSubtitle" component="p">
-                Lançamento: {movie.release_date}
-              </Typography>
-            </CardContent>
-          </Card>
+            <Card
+              key={movie.id}
+              className="card"
+              onClick={() => handleCardClick(movie.id)} // Chama a navegação ao clicar
+              style={{ cursor: "pointer" }} // Muda o cursor para indicar clicável
+            >
+              <CardMedia
+                component="img"
+                height="300"
+                className="cardMedia"
+                image={
+                  movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                    : "https://via.placeholder.com/200x300?text=No+Image"
+                }
+                alt={movie.title}
+              />
+              <CardContent className="cardContent">
+                <Typography className="cardTitle" component="div" color="white">
+                  {movie.title}
+                </Typography>
+                <Typography className="cardSubtitle" component="p">
+                  Lançamento: {movie.release_date}
+                </Typography>
+              </CardContent>
+            </Card>
         ))
       ) : (
         <Typography variant="h6" component="p">
